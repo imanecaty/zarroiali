@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="favicon.png" type="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+ <script src="damage.geojson" type="text/javascript"></script>
+ <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+ <script src="houz.geojson" type="text/javascript"></script>
+ <script src="possibledamage.geojson" type="text/javascript"></script>
+
+  <title>  AL Houz </title>
+
+  <!-- bootstrap core css -->
+
+  
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link href="font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="responsive.css" rel="stylesheet" />
+<style>
+  .service_container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+  
+  #map-container { 
+  position: relative; 
+  width: 100%; /* Élargir pour occuper toute la largeur */
+  height: 100%; /* Élargir pour occuper toute la hauteur */
+  padding: 120px; /* Retirer le padding */
+  margin: 0 auto; /* Retirer les marges */
+  display: flex; /* Utiliser Flexbox pour bien aligner les cartes */
+  justify-content: center;
+  align-items: center;
+}
+
+#map1, #map2 { 
+  position: absolute; 
+  top: 2%; 
+  left:10%;
+  padding: 20%;
+  width: 80%; /* Ajuster pour occuper toute la largeur du conteneur */
+  height: 90%; /* Ajuster pour occuper toute la hauteur du conteneur */
+  border: 7px solid #626562; /* Ajout de la bordure bleue autour de la carte */
+  box-sizing: border-box; /* Assurez-vous que la bordure soit incluse dans les dimensions */
+}
+
+#map1 { z-index: 5; display: none; }
+#map2 { z-index: 4; display: block; }
+
+.slider { 
+  position: absolute; 
+  top: 8%; 
+  left: 50%; 
+  width: 100px; 
+  height: 50px; 
+  background: #626365; 
+  color: rgb(181, 181, 185); 
+  text-align: center; 
+  line-height: 50px; 
+  cursor: pointer; 
+  z-index: 1000; 
+  transform: translate(-50%, -50%); 
+  user-select: none; 
+}
+
+#stats-container {
+  position: absolute; 
+  top: 100px; 
+  right: 130px; 
+  background-color: rgb(6, 6, 6); 
+  padding: 10px; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 10px rgb(19, 19, 232); 
+  z-index: 1000;
+  display: none; /* Cache par défaut */
+}
+
+#stats-container h3 { margin-bottom: 10px; font-size: 1.2em; color: #ffffff;}
+#stats-container p { margin: 5px 0; font-size: 0.9em; color: #ffffff; }
+
+#toggle-stats { 
+  position: absolute; 
+  top: 10px; 
+  left: 150px; 
+  background-color: #000000; 
+  color: rgb(232, 221, 19); 
+  padding: 3px 10px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  z-index: 1000; 
+}
+
+.controls {
+    margin-top: 10px;
+}
+
+
+
+button:hover, a:hover {
+    background-color: #0056b3;
+}
+
+
+<style>
+.legend {
+      text-align: left;
+      line-height: 18px;
+      color: #ffffff;  /* Texte en blanc pour contraster avec le fond sombre */
+      background: rgba(0, 0, 0, 0.5);  /* Fond noir transparent (opacité 50%) */
+      border-radius: 5px;  /* Bord arrondi */
+      padding: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);  /* Ombre pour améliorer la visibilité */
+  }
+
+  .legend i { 
+      width: 18px; 
+      height: 18px; 
+      float: left; 
+      margin-right: 8px; 
+      opacity: 0.7; 
+  }
+  .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
+
+  .container {
+      display: flex;
+      width: 100%;
+      height: 600px;
+      position: center ;
+  }
+  #echart {
+      width: 50%;
+      height: 100%;
+  }
+  .text-container {
+      width: 50%;
+      height: 100%;
+      padding: 20px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      overflow-y: auto;  /* Pour permettre le défilement si nécessaire */
+      background-color: transparent; derrière le texte */
+  }
+  .text-container h2 {
+      margin-top: 0;
+  }
+  #chart-container {
+flex: 1; /* Permet de partager l'espace horizontal avec l'autre section */
+display: flex;
+align-items: right; /* Centre verticalement l'histogramme */
+justify-content: right;
+top : 0;
+margin-top: 0;
+
+}
+
+#chart {
+  width: 50%;
+  height: 100%;/* Ajuste la hauteur interne de l'histogramme */
+  margin-top: 0;
+
+}
+
+#description {
+width: 50%;
+      height: 100%;
+      padding: 20px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      overflow-y: auto;  /* Pour permettre le défilement si nécessaire */
+      background-color: transparent; 
+}
+
+h1 {
+text-align: center;
+}
+
+.description p {
+font-size: 16px;
+width: 50%;
+  height: 100%;
+  padding: 20px;
+  text-align: right;
+  font-family: Arial, sans-serif;
+      line-height: 1.6;
+      overflow-y: auto;  /* Pour permettre le défilement si nécessaire */
+      background-color: transparent;  /
+
+}
+
+.bar {
+fill: steelblue;
+}
+
+.bar:hover {
+fill: orange;
+}
+
+.axis text {
+font-size: 12px;
+color: black;
+}
+
+.axis line,
+.axis path {
+stroke: #000;
+}
+.carousel-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .carousel-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .carousel {
+            position: relative;
+            display: inline-block;
+        }
+
+        .carousel img {
+            width: 500px;
+            height: 350px;
+            object-fit: cover;
+            display: none;
+        }
+
+        .carousel img.active {
+            display: block;
+        }
+
+        .carousel .prev, .carousel .next {
+            position: absolute;
+            top: 50%;
+            font-size: 30px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .carousel .prev {
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        .carousel .next {
+            right: 10px;
+            transform: translateY(-50%);
+        }
+        
+    footer {
+      margin-top: 20px;
+      color: #999;
+      font-size: 14px;
+      text-align: center;
+    }
+  
+    footer a {
+      color: #d32f2f;
+      text-decoration: none;
+      background-color: transparent;
+    }
+  
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .transparent-title {
+            background-color: transparent;
+           
+        }
+
+</style>
+</head>
+<body class="sub_page">
+
+  <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <div class="bg_img_box">
+        <img src="hero-bg.png" alt="">
+      </div>
+    </div>
+
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              Évaluation des bâtiments dans la province d'Al Haouz            </span>
+          </a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ">
+              <li class="nav-item ">
+                <a class="nav-link" href="index.html">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="service.html">map service  <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html"> About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="why.html">Explorer</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="team.html">Team</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+
+  <!-- service section -->
+
+  <!-- Service Section -->
+  <div class="service_container">
+      <div class="heading_container heading_center">
+        <h2>
+          Our <span>Services</span>
+        </h2>
+        <p>Le séisme survenu dans la province d'Al Haouz a eu un impact dévastateur, affectant de nombreuses infrastructures, particulièrement dans les zones urbaines et rurales. La catastrophe a causé des pertes humaines tragiques, avec de nombreux bâtiments endommagés, certains complètement effondrés et d'autres partiellement touchés. L’intensité du séisme a varié en fonction de la distance à l’épicentre, ce qui a contribué à la distribution inégale des dégâts à travers la région. Les bâtiments, qu'ils soient résidentiels, commerciaux ou publics, ont été affectés différemment, et la vulnérabilité de chaque type d'infrastructure a été mise en évidence par les secousses.</p>
+        <div class="carousel-container">
+          <div class="carousel-title">Voilà des images illustratives de ce désastre</div>
+      
+          <div class="carousel">
+              <img src="uno.png" alt="Image 1" class="carousel-item active">
+              <img src="doss.png" alt="Image 2" class="carousel-item">
+              <img src="tress.png" alt="Image 3" class="carousel-item">
+              <img src="quatro.png" alt="Image 4" class="carousel-item">
+              <img src="cinqo.png" alt="Image 5" class="carousel-item">
+              <img src="sise.png" alt="Image 6" class="carousel-item">
+      
+              <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+              <span class="next" onclick="changeImage(1)">&#10095;</span>
+          </div>
+      </div>
+<p>Nous vous offrons ces deux cartes superposées ci-dessous pour vous permettre d’évaluer les bâtiments avant et après le séisme. Voici les fonctionnalités que nous mettons à votre disposition pour faciliter cette évaluation :</p>
+
+<ul>
+    <li><strong>Visualisation des statistiques globales</strong> : Cliquez sur "Afficher les statistiques" pour obtenir un aperçu général des données.</li>
+    <li><strong>Survol des bâtiments</strong> : Passez votre souris sur les bâtiments pour obtenir des informations détaillées sur leur état.</li>
+    <li><strong>Évaluation de la distance</strong> : Vous pouvez évaluer la distance entre n'importe quel point et l’épicentre du séisme.</li>
+    <li><strong>Outils géométriques</strong> : Utilisez les outils géométriques sur la carte après le séisme pour effectuer des requêtes rapides .</li>
+</ul>
+
+<p>Notre objectif est de vous fournir les outils nécessaires pour une évaluation complète et précise des dommages, afin de vous aider à prendre des décisions éclairées pour la reconstruction et la gestion des zones affectées.</p>
+<p>Bon courage😊 </p>
+<p>   </p>
+      </div>
+  
+      <!-- Map Container -->
+      <div id="map-container">
+        <div id="map1"></div>
+        <div id="map2"></div>
+        <div class="slider" id="slider">👆Avant👆</div>
+        <div id="stats-container">
+          <h3>Statistiques</h3>
+          <p id="total-buildings">Bâtiments totaux : 0</p>
+          <p id="damaged-buildings">Bâtiments endommagés : 0</p>
+          <p id="possible-damage-buildings">Dommages possibles : 0</p>
+        </div>
+        <div id="toggle-stats">Afficher les statistiques</div>
+      </div>
+
+      <!-- Leaflet and Sync JS -->
+      <script src="https://unpkg.com/leaflet.sync/L.Map.Sync.js"></script>
+      
+      <!-- Maps and Legend Setup -->
+      <div id="map-container">
+        <script>
+           let currentIndex = 0;
+    const images = document.querySelectorAll('.carousel-item');
+
+    function changeImage(direction) {
+        images[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + direction + images.length) % images.length;
+        images[currentIndex].classList.add('active');
+    }
+          var map1 = L.map('map1').setView([31.25, -8.5], 10);
+          var map2 = L.map('map2').setView([31.25, -8.5], 10);
+
+          L.tileLayer('https://mt1.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+            attribution: '&copy; <a href="https://www.google.com/permissions/geoguidelines.html">Google</a>',
+            maxZoom: 19
+          }).addTo(map1);
+
+          L.tileLayer('https://mt1.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+            attribution: '&copy; <a href="https://www.google.com/permissions/geoguidelines.html">Google</a>',
+            maxZoom: 19
+          }).addTo(map2);
+
+          // Add Legend to Map
+          const legend = L.control({position: 'bottomright'});
+          legend.onAdd = function (map) {
+            const div = L.DomUtil.create('div', 'legend');
+            const labels = [];
+            const colors = ['#FF0000', '#FFFF00', '#00FF00'];
+            const labelsText = ['Endommagé', 'Possible d\'être endommagé', 'Non endommagé'];
+            for (let i = 0; i < colors.length; i++) {
+              labels.push(`<i style="background:${colors[i]}"></i> ${labelsText[i]}`);
+            }
+            div.innerHTML = labels.join('<br>');
+            return div;
+          };
+          legend.addTo(map1);
+
+          // Layers Setup (Damage, Possible Damage, Building Layer)
+          var damageLayer = L.geoJSON(damage, {
+            pointToLayer: function (feature, latlng) {
+              return L.circleMarker(latlng, { radius: 5, fillColor: 'red', color: 'red', weight: 1, opacity: 0.1, fillOpacity: 0.1 });
+            }
+          }).addTo(map1);
+
+          var possibleDamageLayer = L.geoJSON(possibledamage, {
+            pointToLayer: function (feature, latlng) {
+              return L.circleMarker(latlng, { radius: 5, fillColor: 'yellow', color: 'yellow', weight: 1, opacity: 0.1, fillOpacity: 0.1 });
+            }
+          }).addTo(map1);
+
+          var buildingLayer = L.geoJSON(houz, {
+            style: function (feature) {
+              var buildingLatLng = L.geoJSON(feature).getBounds().getCenter();
+              var isDamaged = false;
+              var isPossibleDamage = false;
+              damageLayer.eachLayer(function (damagePoint) {
+                var pointLatLng = damagePoint.getLatLng();
+                if (buildingLatLng.distanceTo(pointLatLng) < 50) {
+                  isDamaged = true;
+                }
+              });
+
+              possibleDamageLayer.eachLayer(function (possibleDamagePoint) {
+                var pointLatLng = possibleDamagePoint.getLatLng();
+                if (buildingLatLng.distanceTo(pointLatLng) < 50) {
+                  isPossibleDamage = true;
+                }
+              });
+
+              if (isDamaged) {
+                return { color: 'red', fillOpacity: 0.6 };
+              } else if (isPossibleDamage) {
+                return { color: 'yellow', fillOpacity: 0.6 };
+              } else {
+                return { color: 'green', fillOpacity: 0.3 };
+              }
+            },
+          }).addTo(map1);
+
+          var buildingLayer2 = L.geoJSON(houz, {
+            style: function (feature) {
+              return { color: 'blue', fillOpacity: 0.3 };
+            },
+            onEachFeature: onEachFeatureHouz
+          }).addTo(map2);
+
+          const info = L.control();
+          info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+          };
+          info.update = function (props) {
+            const contents = props
+              ? `
+                  <span style="color:black;">Surface(m²) : ${props.area_in_me}</span><br />
+                  <span style="color:black;">Confiance de tracé (%) : ${props.confidence}</span><br/>
+                  <span style="color:black;">Date de détection (y/m) : ${props.last_detec}</span>
+              `
+              : '<span style="color:black;">Survolez un bâtiment</span>';
+            this._div.innerHTML = `<h4 style="color:black;">Infos des Bâtiments</h4>${contents}`;
+          };
+          info.addTo(map2);
+
+          // Event Handlers for Feature Interaction
+          function highlightFeature(e) {
+            const layer = e.target;
+            layer.setStyle({
+              weight: 5,
+              color: '#666',
+              dashArray: '',
+              fillOpacity: 0.7
+            });
+            layer.bringToFront();
+            info.update(layer.feature.properties);
+          }
+
+          function resetHighlight(e) {
+            buildingLayer2.resetStyle(e.target);
+            info.update();
+          }
+
+          function zoomToFeature(e) {
+            map2.fitBounds(e.target.getBounds());
+          }
+
+          function onEachFeatureHouz(feature, layer) {
+            layer.on({
+              mouseover: highlightFeature,
+              mouseout: resetHighlight,
+              click: zoomToFeature
+            });
+          }
+
+          map1.sync(map2);
+          map2.sync(map1);
+
+          // Update Statistics Function
+          function updateStatistics() {
+            var totalBuildings = 0;
+            var damagedBuildings = 0;
+            var possibleDamageBuildings = 0;
+
+            buildingLayer.eachLayer(function (layer) {
+              totalBuildings++;
+              var isDamaged = false;
+              var isPossibleDamage = false;
+              var buildingLatLng = layer.getBounds().getCenter();
+
+              damageLayer.eachLayer(function (damagePoint) {
+                var pointLatLng = damagePoint.getLatLng();
+                if (buildingLatLng.distanceTo(pointLatLng) < 50) {
+                  isDamaged = true;
+                }
+              });
+
+              possibleDamageLayer.eachLayer(function (possibleDamagePoint) {
+                var pointLatLng = possibleDamagePoint.getLatLng();
+                if (buildingLatLng.distanceTo(pointLatLng) < 50) {
+                  isPossibleDamage = true;
+                }
+              });
+
+              if (isDamaged) {
+                damagedBuildings++;
+              } else if (isPossibleDamage) {
+                possibleDamageBuildings++;
+              }
+            });
+
+            // Update Stats on the Page
+            document.getElementById('total-buildings').textContent = `Bâtiments totaux : ${totalBuildings}`;
+            document.getElementById('damaged-buildings').textContent = `Bâtiments endommagés : ${damagedBuildings}`;
+            document.getElementById('possible-damage-buildings').textContent = `Dommages possibles : ${possibleDamageBuildings}`;
+          }
+
+          updateStatistics();
+
+          // Toggle map view (before/after)
+          var slider = document.getElementById('slider');
+          slider.addEventListener('click', function () {
+            var map1Element = document.getElementById('map1');
+            var map2Element = document.getElementById('map2');
+
+            if (map2Element.style.display === 'none') {
+              map2Element.style.display = 'block';
+              map1Element.style.display = 'none';
+              slider.innerHTML = "Avant";
+            } else {
+              map2Element.style.display = 'none';
+              map1Element.style.display = 'block';
+              slider.innerHTML = "Après";
+            }
+
+            map1.invalidateSize();
+            map2.invalidateSize();
+          });
+
+          // Toggle statistics visibility
+          var toggleStatsButton = document.getElementById('toggle-stats');
+          toggleStatsButton.addEventListener('click', function () {
+            var statsContainer = document.getElementById('stats-container');
+            statsContainer.style.display = statsContainer.style.display === 'none' ? 'block' : 'none';
+          });
+        </script>
+         <script>
+          // Ajouter un marqueur animé pour le centre du séisme
+      const earthquakeCenter = [31.5, -7.9]; // Coordonnées approximatives du centre du séisme
+      const zoomLevel = 10; // Niveau de zoom souhaité
+      
+      // Icône personnalisée
+      const earthquakeIcon = L.divIcon({
+          html: `
+              <div style="
+                  width: 50px; 
+                  height: 50px; 
+                  background: radial-gradient(circle, rgba(255,94,94,1) 0%, rgba(255,0,0,0.7) 60%, rgba(255,0,0,0) 100%);
+                  border-radius: 50%;
+                  animation: pulse 2s infinite;
+              "></div>
+          `,
+          className: '',
+          iconSize: [50, 50],
+          iconAnchor: [25, 25]
+      });
+      
+      // Centrer la première carte sur le marqueur et ajuster le niveau de zoom
+      map1.setView(earthquakeCenter, zoomLevel);
+      const earthquakeMarker1 = L.marker(earthquakeCenter, { icon: earthquakeIcon })
+          .bindPopup(`
+              <h3>l\'épicentre du Séisme</h3>
+              <p><strong>Coordonnées :</strong></p>
+              <p>Latitude : ${earthquakeCenter[0]}</p>
+              <p>Longitude : ${earthquakeCenter[1]}</p>
+              <p>Localisation : Al Haouz, Maroc</p>
+          `)
+          .addTo(map1);
+      
+      // Centrer la deuxième carte sur le marqueur et ajuster le niveau de zoom
+      map2.setView(earthquakeCenter, zoomLevel);
+      const earthquakeMarker2 = L.marker(earthquakeCenter, { icon: earthquakeIcon })
+          .bindPopup(`
+              <h3>Centre du Séisme</h3>
+              <p><strong>Coordonnées :</strong></p>
+              <p>Latitude : ${earthquakeCenter[0]}</p>
+              <p>Longitude : ${earthquakeCenter[1]}</p>
+              <p>Localisation : Al Haouz, Maroc</p>
+          `)
+          .addTo(map2);
+      
+      // Animation CSS pour effet de pulsation
+      const style = document.createElement('style');
+      style.innerHTML = `
+      @keyframes pulse {
+          0% {
+              transform: scale(1);
+              opacity: 1;
+          }
+          50% {
+              transform: scale(1.5);
+              opacity: 0.5;
+          }
+          100% {
+              transform: scale(1);
+              opacity: 1;
+          }
+      }`;
+      document.head.appendChild(style);
+      
+        </script>
+        <script>
+          // Ajouter un contrôle personnalisé pour recentrer la carte sur l'épicentre
+       const zoomToEpicenterButton = L.control({ position: 'topright' });
+       
+       zoomToEpicenterButton.onAdd = function(map) {
+           const button = L.DomUtil.create('button', 'leaflet-bar leaflet-control'); // Créer un bouton
+           button.innerHTML = 'Recentrer Epicentre'; // Texte du bouton
+           button.style.border = '1px solid rgba(0,0,0,0.5)';
+           button.style.padding = '10px 15px';
+           button.style.cursor = 'pointer';
+           button.style.color = 'white' ; 
+           button.style.backgroundColor =  '#000000' ;    
+           button.style.borderradius =  '5px';    
+             button.style.zindex =  '1000' ; 
+       
+           // Quand le bouton est cliqué, recentrer la carte sur l'épicentre
+           button.onclick = function() {
+               map1.setView(earthquakeCenter, zoomLevel);  // Recentrer la carte 1 sur l'épicentre
+                // Recentrer la carte 2 sur l'épicentre
+           };
+       
+           return button;
+       };
+       
+       // Ajouter le bouton pour le recentrage sur l'épicentre aux deux cartes
+       zoomToEpicenterButton.addTo(map1);
+       // Ajouter un bouton pour revenir à la vue globale (légèrement décalée vers le bas)
+       const zoomButtonGlobal = L.control({ position: 'topright' });
+       
+       zoomButtonGlobal.onAdd = function(map) {
+           const button = L.DomUtil.create('button', 'leaflet-bar leaflet-control'); // Créer un bouton
+           button.innerHTML = 'Vue Globale'; // Texte du bouton
+           button.style.border = '1px solid rgba(0,0,0,0.5)';
+           button.style.padding = '10px 15px';
+           button.style.cursor = 'pointer';
+           button.style.color = 'white' ; 
+           button.style.backgroundColor =  '#000000' ;    
+           button.style.borderradius =  '5px';    
+           button.style.zindex =  '1000' ; 
+       
+           // Quand le bouton est cliqué, revenir à la vue globale
+           button.onclick = function() {
+               map1.setView([31.1, -8.5], 10.5);
+               map2.setView([31.1, -8.5], 10.5); // Légèrement décalé vers le bas pour la vue globale
+           };
+       
+           return button;
+       };
+       
+       // Ajouter le bouton pour revenir à la vue globale aux deux cartes
+       zoomButtonGlobal.addTo(map2);
+       zoomButtonGlobal.addTo(map1);
+       
+        </script>
+        <script>
+          // Groupe pour les objets dessinés
+          var drawnItems = new L.FeatureGroup();
+              map1.addLayer(drawnItems);
+      
+              // Contrôle des outils de dessin
+              var drawControl = new L.Control.Draw({
+                  edit: {
+                      featureGroup: drawnItems
+                  },
+                  draw: {
+                      polyline: true,
+                      polygon: true,
+                      rectangle: true,
+                      circle: true,
+                      marker: true
+                  }
+              });
+              map1.addControl(drawControl);
+      
+              // Afficher la superficie après dessin d'un polygone ou rectangle
+              map1.on(L.Draw.Event.CREATED, function (event) {
+                  var layer = event.layer;
+                  if (layer instanceof L.Polygon || layer instanceof L.Rectangle) {
+                      var area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
+                      var areaFormatted = (area / 1000000).toFixed(2) + " km²"; // Conversion en km²
+                      layer.bindPopup("Superficie: " + areaFormatted).openPopup();
+                  }
+                  drawnItems.addLayer(layer);
+              });
+      
+              // Activation du zoom par cadre (box zoom)
+              map1.boxZoom.enable();
+      
+              // Ajouter un bouton personnalisé pour activer le zoom par cadre
+              var zoomBoxControl = L.control({ position: 'topleft' });
+              zoomBoxControl.onAdd = function () {
+                  var div = L.DomUtil.create('div', 'leaflet-bar');
+                  div.innerHTML = '<a href="#" title="Zoomer avec cadre" id="zoom-box" style="padding: 5px;">🔲</a>';
+                  L.DomEvent.on(div, 'click', function (e) {
+                      e.preventDefault();
+                      map1.boxZoom.enable(); // Activer box zoom sur clic
+                  });
+                  return div;
+              };
+              zoomBoxControl.addTo(map1);
+      </script>
+      <script>
+        // Définir les coordonnées de l'épicentre
+    const epicenterCoords = L.latLng(31.5 , -7.9);  // Remplacez par les coordonnées de l'épicentr
+    /// Définir les coordonnées de l'épicentre
+    // Tableau pour stocker les objets dessinés (lignes et pop-ups)
+    let drawnLines = [];
+    let drawingMode = false; // Contrôle si nous sommes en mode dessin
+    
+    // Ajouter un contrôle personnalisé pour gérer le calcul de distance et l'effacement
+    const distanceButton = L.control({ position: 'topright' });
+    
+    distanceButton.onAdd = function(map1) {
+        const button = L.DomUtil.create('button', 'leaflet-bar leaflet-control');
+        button.innerHTML = 'disntace epicentre';  // Texte du bouton
+        button.style.border = '1px solid rgba(0,0,0,0.5)';
+        button.style.padding = '10px 15px';
+        button.style.cursor = 'pointer';
+        button.style.color = 'white';
+        button.style.backgroundColor = '#000000';
+        button.style.borderRadius = '5px';
+        button.style.zIndex = '1000';
+    
+        button.onclick = function() {
+            if (drawingMode) {
+                // Si en mode dessin, effacer les dessins existants
+                clearDrawings(); // Effacer les dessins
+                drawingMode = false; // Désactiver le mode dessin
+                button.innerHTML = 'distance epicentre';  // Restaurer le texte du bouton
+            } else {
+                // Activer le mode dessin
+                drawingMode = true;
+                button.innerHTML = 'Annuler Dessin';  // Changer le texte du bouton
+    
+                // Activer l'écoute des clics sur la carte pour dessiner et calculer la distance
+                map1.on('click', drawLine);
+            }
+        };
+    
+        return button;
+    };
+    
+    // Fonction pour dessiner la ligne et calculer la distance
+    function drawLine(e) {
+        const clickedPoint = e.latlng;  // Coordonnée du clic
+    
+        // Calculer la distance entre l'épicentre et le point cliqué en mètres
+        const distanceMeters = epicenterCoords.distanceTo(clickedPoint);
+    
+        // Convertir la distance en kilomètres
+        const distanceKm = distanceMeters / 1000;
+    
+        // Afficher la distance dans une pop-up au point cliqué
+        const popup = L.popup()
+            .setLatLng(clickedPoint)
+            .setContent(`La distance à l'épicentre est : ${distanceKm.toFixed(2)} km`)
+            .openOn(map1);
+    
+    }
+    
+    // Fonction pour effacer toutes les lignes dessinées
+    function clearDrawings() {
+        drawnLines.forEach(function(line) {
+            map1.removeLayer(line);  // Supprimer chaque ligne de la carte
+        });
+        drawnLines = []; // Réinitialiser le tableau des lignes dessinées
+    }
+    
+    // Ajouter le bouton pour calculer la distance / effacer les dessins sur la carte
+    distanceButton.addTo(map1);
+    
+    // Pour chaque carte (map1 et map2)
+    distanceButton.addTo(map1);
+    
+    </script>
+        </div>
+      </div>
+    
+        <footer>
+            Made by <a href="#">@girlies</a> with love 💕
+        </footer>
+    
+        
+      
+
+
+  <!-- jQery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- owl slider -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script type="text/javascript" src="js/custom.js"></script>
+  <!-- Google Map -->
+  </script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>

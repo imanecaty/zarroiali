@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="favicon.png" type="">
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+
+  <title>  AL Houz </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link href="font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="responsive.css" rel="stylesheet" />
+  <style>
+    .text-explanation {
+            font-size: 16px;
+            margin: 20px;
+        }
+        .chart-container {
+            display: none;
+            width: 100%;
+            height: 400px;
+        }
+        .chart-title {
+            cursor: pointer;
+            margin: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        .chart-title:hover {
+            background-color: #45a049;
+        }
+        #search-bar {
+            width: 80%;
+            padding: 10px;
+            margin: 20px auto;
+            display: block;
+            font-size: 16px;
+        }
+        #suggestions {
+            margin-top: 20px;
+            display: none; /* Suggestions cachées initialement */
+        }
+        #suggestions div {
+            padding: 5px;
+            background-color: #f1f1f1;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        #suggestions div:hover {
+            background-color: #ddd;
+        }
+        #chart-titles {
+            display: none; /* Titres des graphiques cachés initialement */
+        }
+       /* Style du bouton de la dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style du bouton du menu déroulant */
+.dropdown-btn {
+    background-color: #0917d2; /* Couleur de fond verte */
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold; /* Texte en gras pour plus de visibilité */
+    border: none;
+    cursor: pointer;
+    border-radius: 8px; /* Coins arrondis pour un look plus doux */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre subtile autour du bouton */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Animation fluide lors des interactions */
+    text-align: center; /* Alignement du texte */
+}
+
+/* Effet au survol du bouton */
+.dropdown-btn:hover {
+    background-color: #1cb8e8; /* Changement de couleur de fond au survol */
+    transform: scale(1.05); /* Agrandissement léger du bouton pour l'effet de survol */
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); /* Ombre plus marquée lors du survol */
+}
+
+/* Contenu de la dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+/* Afficher le contenu quand on survole le bouton */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Style des liens dans la dropdown */
+.single-line {
+    display: block; /* Chaque lien prend une ligne entière */
+    color: #4CAF50;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+}
+
+.single-line:hover {
+    background-color: #f1f1f1; /* Changer la couleur de fond au survol */
+    color: #333;
+}
+
+/* Optionnel : pour un espacement uniforme entre les liens */
+.single-line:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+    .title-container {
+    text-align: center;
+    margin-top: 20px; /* Ajustez si nécessaire */
+}
+
+.title {
+    font-size: 36px; /* Taille du titre */
+    font-weight: bold;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); /* Ombre du texte */
+    color: #333; /* Couleur du texte */
+}
+.footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+        .custom-container {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+    background-color: #ffffff; /* Fond blanc pour le conteneur */
+    border: 1px solid #ddd; /* Bordure grise légère */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet 3D */
+    overflow: hidden; /* Évite le débordement du contenu */
+}
+
+/* Ajustement pour les écrans plus petits */
+@media (max-width: 768px) {
+    .custom-container {
+        padding: 10px;
+        margin: 10px;
+    }
+}
+
+  </style>
+
+</head>
+
+<body class="sub_page">
+  
+
+  <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <div class="bg_img_box">
+        <img src="hero-bg.png" alt="">
+      </div>
+    </div>
+
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              Évaluation des bâtiments dans la province d'Al Haouz 
+            </span>
+          </a>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ">
+              <li class="nav-item ">
+                <a class="nav-link" href="index.html">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="service.html">map service</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="about.html"> About <span class="sr-only">(current)</span> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="why.html">Explorer</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="team.html">Team</a>
+              </li>
+          
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <!-- about section -->
+
+  <section class="why_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          About <span>AL houz</span>
+        </h2>
+      </div>
+      </div>
+  <div class="custom-container">
+    <div class="title-container">
+      <h1 class="title">Analyser les données de la province Al Haouz</h1>
+  </div>
+
+  <!-- Barre de recherche -->
+  <input type="text" id="search-bar" placeholder="Tapez un mot-clé..." oninput="filterCharts()">
+  <div class="dropdown">
+      <button class="dropdown-btn">Télécharger des requêtes(.xlsx)</button>
+      <div class="dropdown-content">
+         <b> <a href= "force_siesme.xlsx" download="force_siesme" class="single-line">force_siesme </a></b>
+         <b><a href="les hopitaux.xlsx" download="les hopitaux" class="single-line">les hopitaux</a></b>
+         <b><a href="morts et blessés.xlsx" download="morts et blessés" class="single-line">morts et blessés</a></b>
+         <b><a href="nature batiment.xlsx"    download="nature batiment" class="single-line">nature batiment</a></b>
+         <b><a href= "nombre de batment par commune.xlsx" download="le nombre des batiments par commune " class="single-line">Nombre de bâtiments par commune </a></b>
+         <b><a href=  "population par cercle.xlsx"  download="population par cercle " class="single-line">population par cercle </a></b>
+      </div>
+  </div>
+  
+  <!-- Suggestions de recherche -->
+  <div id="suggestions">
+      <div onclick="displaySuggestion('Force du Séisme en fonction de la Distance')">Force du Séisme en fonction de la Distance</div>
+      <div onclick="displaySuggestion('Morts et Blessés par Commune')">Morts et Blessés par Commune</div>
+      <div onclick="displaySuggestion('Vulnérabilité Sismique des Bâtiments')">Vulnérabilité Sismique des Bâtiments</div>
+      <div onclick="displaySuggestion('Établissements de Santé dans la Province d\'Al Haouz')">Établissements de Santé dans la Province d'Al Haouz</div>
+      <div onclick="displaySuggestion('Répartition des Dégâts')">Répartition des Dégâts</div>
+      <div onclick="displaySuggestion('Types des Intervenants')">Types des Intervenants</div>
+      <div onclick="displaySuggestion('Dispositif Médical')">Dispositif Médical</div>
+      <div onclick="displaySuggestion('Répartition du Budget de Réparation')">Répartition du Budget de Réparation</div>
+      <div onclick="displaySuggestion('Répartition des Bâtiments Après Séisme')">Répartition des Bâtiments Après Séisme</div>
+      <div onclick="displaySuggestion('Population, Ménages, et Étrangers par Cercle')">Population, Ménages, et Étrangers par Cercle</div>
+      <div onclick="displaySuggestion('le nombre des batiments par commune')">le nombre des batiments par commune      </div>
+    </div>
+<!-- Ajouter des boutons pour chaque graphique -->
+
+  <!-- Titre des diagrammes -->
+  <div id="chart-titles">
+      <div class="chart-title" onclick="toggleChart(0)">Force du Séisme en fonction de la Distance</div>
+      <div class="chart-title" onclick="toggleChart(1)">Morts et Blessés par Commune</div>
+      <div class="chart-title" onclick="toggleChart(2)">Vulnérabilité Sismique des Bâtiments</div>
+      <div class="chart-title" onclick="toggleChart(3)">Établissements de Santé dans la Province d'Al Haouz</div>
+      <div class="chart-title" onclick="toggleChart(4)">Répartition des Dégâts</div>
+      <div class="chart-title" onclick="toggleChart(5)">Types des Intervenants</div>
+      <div class="chart-title" onclick="toggleChart(6)">Dispositif Médical</div>
+      <div class="chart-title" onclick="toggleChart(7)">Répartition du Budget de Réparation</div>
+      <div class="chart-title" onclick="toggleChart(8)">    Répartition des Bâtiments Après Séisme</div>
+      <div class="chart-title" onclick="toggleChart(9)">    Population, Ménages, et Étrangers par Cercle</div>
+      <div class="chart-title" onclick="toggleChart(10)">    le nombre des batiments par commune</div>
+
+  </div>
+  
+
+  <!-- Diagrammes -->
+  <div id="chart0" class="chart-container"></div>
+  <div id="chart1" class="chart-container"></div>
+  <div id="chart2" class="chart-container"></div>
+  <div id="chart3" class="chart-container"></div>
+  <div id="chart4" class="chart-container"></div>
+  <div id="chart5" class="chart-container"></div>
+  <div id="chart6" class="chart-container"></div>
+  <div id="chart7" class="chart-container"></div>
+  <div id="chart8" class="chart-container"></div>
+  <div id="chart9" class="chart-container"></div>
+  <div id="chart10" class="chart-container"></div>
+
+
+  <script>
+      var currentChart = null;  // Variable pour garder une trace du graphique affiché
+      var communes = ["Ait Ourir", "Amizmiz", "Tahannaout", "Ait Sidi Daoud", "Ait Faska", "Sidi Abdellah Ghiat", "Tamazouzte", "Iguerferouane", "Ghmate", "Tidili Mesfioua", "Touama", "Tamaguert", "Touama", "Zerkten", "Tighedouine", "Ait Aadel", "Ait Hkim-Ait Yzid", "Abadou", "Tazart", "Asni", "Ighil", "Aghbar", "Talat N'yaaqoub", "Ijoukak", "Imgdal", "Ouirgane", "Amghras", "Anougal", "Azgour", "Tizguine", "Dar Jamaa", "Sidi Badhaj", "Oulad Mtaa", "Lalla Takarkoust", "Ouazguita", "Ourika", "Sti Fadma", "Oukaimden", "Aghouatim", "Moulay Brahim", "Tameslohte"];
+      var populations = [56954, 13840, 16236, 175598, 21010, 33076, 43237, 16886, 12432, 28674, 20283, 10022, 11401, 18335, 21161, 8724, 8104, 10484, 14584, 56005, 22637, 4666, 3447, 7153, 5633, 4782, 7687, 53988, 5966, 4006, 6208, 5185, 6184, 5835, 6915, 8419, 4827, 167379, 50558, 24056, 24159, 4790, 36258, 11331, 2609, 40283, 10481];
+      var menages = [13312, 3664, 3847, 40168, 4846, 7528, 10274, 3824, 2559, 6526, 4611, 2313, 2761, 3833, 4152, 1603, 1517, 2157, 3144, 13422, 4966, 1069, 852, 1954, 1415, 1336, 1830, 13609, 1492, 1016, 1597, 1433, 1549, 1449, 1722, 2097, 1193, 38469, 11574, 5683, 5162, 932, 8256, 2634, 9911, 2604];
+      var etrangers = [13, 13, 11, 121, 2, 9, 60, 11, 0, 39, 0, 23, 27, 0, 0, 0, 0, 0, 0, 3, 8, 0, 0, 0, 0, 7, 45, 1, 0, 0, 2, 0, 0, 31, 8, 1, 12, 0, 106, 0, 248, 10];
+      var data = [{ commune: "Abadou", value: 6615 }, { commune: "Aghbar", value: 7568 }, { commune: "Ait Aadel", value: 5158 }, { commune: "Ait Faska", value: 23714 }, { commune: "Ait Hkim Ait Izid", value: 5009 }, { commune: "Ait Ourir", value: 13161 }, { commune: "Ait Sidi Daoud", value: 14801 }, { commune: "Amghras", value: 2422 }, { commune: "Amizmiz", value: 2783 }, { commune: "Anougal", value: 889 }, { commune: "Asni", value: 5662 }, { commune: "Azgour", value: 3660 }, { commune: "Dar Jamaa", value: 10010 }, { commune: "Ghmate", value: 30313 }, { commune: "Ighil", value: 706 }, { commune: "Iguerferouane", value: 7917 }, { commune: "Ijoukak", value: 3769 }, { commune: "Imgdal", value: 2904 }, { commune: "Lalla Takarkoust", value: 8873 }, { commune: "Moulay Brahim", value: 7081 }, { commune: "Ouazguita", value: 3699 }, { commune: "Ouirgane", value: 8644 }, { commune: "Oukaimden", value: 1990 }, { commune: "Oulad Mtaa", value: 4186 }, { commune: "Ourika", value: 24169 }, { commune: "Sidi Abdallah Ghiat", value: 35391 }, { commune: "Sidi Badhaj", value: 8809 }, { commune: "Sti Fadma", value: 8897 }, { commune: "Tahannaout", value: 28633 }, { commune: "Talat N'Yaaqoub", value: 5224 }, { commune: "Tamaguert", value: 9842 }, { commune: "Tamazouzte", value: 17116 }, { commune: "Tameslohte", value: 37427 }, { commune: "Tazart", value: 8671 }, { commune: "Tidili Mesfioua", value: 14220 }, { commune: "Tighedouine", value: 10825 }, { commune: "Tizguine", value: 9191 }, { commune: "Touama", value: 10335 }, { commune: "Zerkten", value: 7937 }];
+
+      // Fonction pour basculer l'affichage des graphiques
+      function toggleChart(index) {
+          var chartContainer = document.getElementById("chart" + index);
+
+          // Si un graphique est déjà affiché, on le cache avant d'afficher le nouveau
+          if (currentChart !== null) {
+              currentChart.style.display = "none";
+          }
+
+          // Affiche le graphique sélectionné
+          chartContainer.style.display = "block";
+          currentChart = chartContainer;  // Met à jour la référence du graphique affiché
+
+          initializeChart(index);  // Initialiser le graphique si nécessaire
+      }
+      function downloadCSV(filename) {
+  // Simule le téléchargement du fichier CSV
+  alert(`Téléchargement de ${filename}`);
+  // Logique pour télécharger réellement un fichier CSV
+  // window.location.href = `chemin/vers/vos/fichiers/csv/${filename}`;
+}
+
+
+      // Fonction pour initialiser les graphiques ECharts
+      function initializeChart(index) {
+          var chart = echarts.init(document.getElementById("chart" + index));
+          var options = [
+              {
+                  title: { text: 'Force du Séisme en fonction de la Distance', left: 'center', subtext:'Ce graphique montre l\'évolution de l\'intensité du séisme en fonction de la distance par rapport à l\'épicentre. Plus la distance augmente,\n'+' plus l\'intensité diminue, allant de 1,0 g à 0 km (magnitude XI) à 0,01 g à 200 km (magnitude III).' , subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } } },
+                  tooltip: { trigger: 'axis', formatter: function (params) { return `Distance: ${params[0].data[0]} km<br/>Intensité: ${params[0].data[1]} g<br/>Magnitude: ${params[0].data[2]}`; } },
+                  xAxis: { type: 'category', data: [0, 5, 10, 20, 30, 50, 100, 150, 200] },
+                  yAxis: { type: 'value', name: 'Intensité (g)' },
+                  grid: {
+          left: '5%',
+          right: '5%',
+          top : '20(%',
+          containLabel: true
+      },
+                  series: [{ name: 'Intensité', type: 'line', data: [[0, 1.0, 'XI'], [5, 0.8, 'X'], [10, 0.6, 'IX'], [20, 0.4, 'VIII'], [30, 0.25, 'VII'], [50, 0.1, 'VI'], [100, 0.05, 'V'], [150, 0.02, 'IV'], [200, 0.01, 'III']], smooth: true }]
+              },
+              {
+  title: { text: 'Morts et Blessés par Commune', left: 'center', subtext:' Al Haouz enregistre le plus grand nombre de victimes, avec 1000 morts et 3000 blessés. Tahanaout suit avec 700 morts et 2000 blessés.\n'+' Les autres communes, telles qu\'Asni, Ouirgane, Aghbalou et Amizmiz, présentent des chiffres moins élevés, mais restent touchées par le désastre.\n'+' Ce graphique met en lumière les zones les plus affectées par la catastrophe.' , subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } } },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['Morts', 'Blessés'], top: '30%' },
+  xAxis: { type: 'category', data: ['Al Haouz', 'Tahanaout', 'Asni', 'Ouirgane', 'Aghbalou', 'Amizmiz'] },
+  yAxis: { type: 'value', name: 'Nombre de Personnes' },
+  grid: {
+left: '5%',
+right: '5%',
+top : '40(%',
+containLabel: true
+},
+  series: [
+      { name: 'Morts', type: 'bar', data: [1000, 700, 500, 300, 200, 100], itemStyle: { color: '#ff4c4c' } },
+      { name: 'Blessés', type: 'bar', data: [3000, 2000, 1500, 1000, 800, 400], itemStyle: { color: '#4c9aff' } }
+  ]
+},
+{
+  title: { text: 'Vulnérabilité Sismique des Bâtiments à Al Haouz', left: 'center', subtext:'Ce diagramme souligne la nécessité d\'une attention particulière à certains types de bâtiments et zones pour renforcer leur résistance sismique.Les catégories \n'+'analysées sont : bâtiments résidentiels, bâtiments traditionnels, bâtiments commerciaux, infrastructures publiques, zones rurales isolées, \n'+'et zones urbaines modernes.Les résultats sont divisés en trois niveaux de vulnérabilité :\n'+ ' ↪ Vulnérabilité élevée, qui représente le plus grand risque, se retrouve particulièrement dans les bâtiments résidentiels, traditionnels, et les zones rurales isolées.\n'+' ↪ Vulnérabilité modérée, qui affecte une gamme plus large de bâtiments, incluant aussi bien les bâtiments commerciaux que les infrastructures publiques.\n'+' ↪ Vulnérabilité faible, surtout présente dans les zones urbaines modernes où les constructions sont mieux adaptées aux risques sismiques. ', subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } } },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['Vulnérabilité Élevée', 'Vulnérabilité Modérée', 'Vulnérabilité Faible'], top: '40%' },
+  xAxis: { type: 'category', data: ['Bâtiments Résidentiels', 'Bâtiments Traditionnels', 'Bâtiments Commerciaux', 'Infrastructures Publiques', 'Zones Rurales Isolées', 'Zones Urbaines Modernes'] },
+  yAxis: { type: 'value', name: 'Vulnérabilité' },
+  grid: {
+left: '5%',
+right: '5%',
+top : '43%',
+containLabel: true
+},
+  series: [
+      { name: 'Vulnérabilité Élevée', type: 'bar', data: [90, 100, 40, 30, 80, 50], itemStyle: { color: '#ff6666' } },
+      { name: 'Vulnérabilité Modérée', type: 'bar', data: [50, 60, 70, 80, 40, 60], itemStyle: { color: '#ffcc00' } },
+      { name: 'Vulnérabilité Faible', type: 'bar', data: [20, 30, 60, 70, 40, 80], itemStyle: { color: '#66cc66' } }
+  ]
+  
+},
+{
+title: {
+text: 'Établissements de Santé dans la Province d\'Al Haouz',
+subtext: 'Ce graphique met en lumière la distribution des ressources sanitaires, soulignant des éventuelles lacunes dans certaines zones.\n'+'il y a un établissement de santé dans chacune des communes Tahanaout, Asni, et Amizmiz',
+left: 'center',
+subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } } 
+},
+tooltip: {
+trigger: 'axis',
+axisPointer: {
+type: 'shadow'
+}
+},
+xAxis: {
+type: 'category',
+name: 'Commune',
+data: ['Tahanaout', 'Asni', 'Amizmiz', 'Ouirgane', 'Aghbalou'],
+nameLocation: 'middle',
+nameGap: 30
+},
+yAxis: {
+type: 'value',
+name: 'Nombre d\'Établissements',
+nameLocation: 'middle',
+nameGap: 40
+},
+grid: {
+left: '5%',
+right: '5%',
+top : '35%',
+containLabel: true
+},
+series: [
+{
+name: 'Établissements de Santé',
+type: 'bar',
+data: [1, 1, 1, 0, 0],
+itemStyle: {
+  color: '#4caf50'
+}
+}
+]
+},
+{
+title: {
+text: 'Répartition des Dégâts',
+subtext: 'ce diagramme met en évidence trois catégories de victimes : \n'+' * 2960 personnes décédées, 4661 blessés légers, et 115 blessés graves*. Ces chiffres illustrent la tragédie humaine causée par le séisme,',
+left: 'center',
+top: 'top',
+subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } } 
+},
+tooltip: {
+trigger: 'item',
+formatter: '{a} <br/>{b}: {c} ({d}%)'
+},
+grid: {
+left: '5%',
+right: '5%',
+top : '50%',
+containLabel: true
+},
+series: [
+{
+  name: 'Dégâts',
+  type: 'pie',
+  radius: '55%',
+  center: ['50%', '60%'],
+  data: [
+      { value: 2960, name: 'Décédés' },
+      { value: 4661, name: 'Blessés Légers' },
+      { value: 115, name: 'Blessés Graves' }
+  ],
+  emphasis: {
+      itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+      }
+  }
+}
+]
+},
+{
+title: { text: 'Types d\'Intervenants', subtext: 'Les intervenants mobilisés dans cette opération de gestion de crise sont organisés en plusieurs niveaux hiérarchiques.\n'+' En tête, le Ministère de l\'Intérieur supervise la coordination globale, incluant la Direction générale de la Sûreté nationale pour les aspects sécuritaires. \n'+'Ensuite, le Ministère de la Santé prend en charge la gestion des soins médicaux et des hôpitaux de campagne, tandis que \n'+'la Protection Civile s\'occupe des opérations de secours et du déblaiement. Le Ministère de l\'Équipement est responsable\n'+' du déblocage des routes et de la restauration des infrastructures essentielles. Les Forces armées royales interviennent \n'+'pour fournir un soutien logistique, médical et sécuritaire, et les secouristes internationaux apportent leur expertise spécialisée et un soutien supplémentaire.\n'+' Ces différents acteurs collaborent pour assurer une réponse rapide, coordonnée et efficace face à la crise.', left: 'center' , subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } }},
+tooltip: { trigger: 'item' },
+series: [{
+name: 'Intervenants', type: 'pie', radius: '50%',
+data: [
+{ value: 1, name: 'Ministère de l\'Intérieur' },
+{ value: 1, name: 'Direction générale de la Sûreté nationale' },
+{ value: 1, name: 'Ministère de la Santé' },
+{ value: 1, name: 'La protection civile' },
+{ value: 1, name: 'Ministère de l\'Équipement' },
+{ value: 1, name: 'Secouristes internationaux' },
+{ value: 1, name: 'Forces armées royales' },
+
+],
+emphasis: { itemStyle: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0, 0, 0, 0.5)' } },
+top: '30%'
+}]
+
+},
+
+{ title: {
+text: 'Dispositif Médical',
+subtext: 'Plus de 300 tonnes de médicaments, 1 268 médecins, 1 733 infirmiers, et 500 ambulances ont été mobilisés,\n'+' avec 2 461 lits et 9 unités mobiles déployés. Parallèlement, 235 engins et 243 chauffeurs ont été engagés pour \n'+'le déblocage des routes. Les citoyens ont participé activement à travers des campagnes de don de sang et  des collectes d’aides (nourriture, vêtements, médicaments, etc.).\n'+' Enfin, un fonds spécial séisme a permis de collecter plus de 12 milliards de dirhams marocains au 9 octobre.',
+left: 'center',
+top: 'top',
+subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } } 
+},
+tooltip: {
+trigger: 'axis',
+axisPointer: {
+type: 'shadow'
+}
+},
+grid: {
+left: '5%',
+right: '5%',
+top : '40%',
+containLabel: true
+},
+xAxis: {
+type: 'category',
+data: ['Médicaments', 'Médecins', 'Infirmiers', 'Ambulances', 'Lits', 'Unités Mobiles']
+},
+yAxis: {
+type: 'value',
+name: 'Quantité',
+nameLocation: 'middle',
+nameGap: 40
+},
+series: [
+{
+name: 'Quantité',
+type: 'bar',
+data: [300, 1268, 1733, 500, 2461, 9],
+itemStyle: {
+color: '#4c9aff'
+}
+}
+]
+},
+{ title: {
+text: 'Répartition du Budget de Réparation',
+subtext: 'Un total de 98 MMDH est alloué au développement global des régions touchées, dont 14 MMDH pour désenclaver les régions affectées et 1,2 MMDH pour \n'+' la réhabilitation de 20 sites culturels, ainsi que plus de 1 500 mosquées et mausolées. Par ailleurs, 22 MMDH sont destinés aux actions d\'urgence, avec \n'+'8 MMDH pour les aides  immédiates, dont une aide de 2 500 DH par ménage, par mois, pendant un an.  Enfin, 14 MMDH sont consacrés aux actions immédiates\n'+' de reconstruction, avec une aide de 140 000 DH pour les logements totalement effondrés et 80 000 DH pour ceux partiellement effondrés. \n'+'Ce budget reflète les efforts considérables engagés  pour la reconstruction et l\'assistance aux sinistrés.',
+left: 'center',
+top: 'top',
+subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } } 
+},
+tooltip: {
+trigger: 'item',
+formatter: '{a} <br/>{b}: {c} MMDH ({d}%)'
+},
+grid: {
+left: '5%',
+right: '5%',
+top : '40%',
+containLabel: true
+},
+series: [
+{
+name: 'Répartition du Budget',
+type: 'pie',
+radius: '55%',
+center: ['50%', '60%'],
+data: [
+{ value: 98, name: 'Développement global des régions touchées' },
+{ value: 14, name: 'Désencavement des régions affectées' },
+{ value: 1.2, name: 'Réhabilitation de 20 sites culturels' },
+{ value: 8, name: 'Aides d\'urgence' },
+{ value: 14, name: 'Actions immédiates de reconstruction' },
+{ value: 5, name: 'Aides pour logements effondrés et partiellement effondrés' }
+],
+emphasis: {
+itemStyle: {
+  shadowBlur: 10,
+  shadowOffsetX: 0,
+  shadowColor: 'rgba(0, 0, 0, 0.5)'
+}
+},
+top: '20%' 
+}
+]
+},
+
+{
+title: {
+subtext: 'ce diagramme permet de visualiser la proportion de bâtiments ayant subi des dommages \n' + 'visibles par rapport à ceux dont l\'état nécessite une évaluation plus approfondie (59 674 bâtiments touchés,avec 32% d\'effondrements totaux et 68%) \n'+'Cette analyse est essentielle pour prioriser les interventions de reconstruction et de sécurité,\n'+' en fournissant un aperçu clair de l\'impact du séisme sur le bâti dans la zone concernée',
+text: 'Répartition des Bâtiments Après Séisme',
+left: 'center',
+subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } }
+},
+tooltip: {
+trigger: 'item',
+formatter: '{a} <br/>{b}: {c} ({d}%)'
+},
+legend: {
+orient: 'vertical',
+left: 'left',
+data: ['Possibilité d\'Endommagement', 'Endommagé']
+},
+series: [
+{
+name: 'Catégorie de Dégâts',
+type: 'pie',
+radius: '50%',
+data: [
+{ value: 299, name: 'Possibilité d\'Endommagement' },
+{ value: 617, name: 'Endommagé' }
+],
+emphasis: {
+itemStyle: {
+  shadowBlur: 10,
+  shadowOffsetX: 0,
+  shadowColor: 'rgba(0, 0, 0, 0.5)'
+}
+},
+top: '20%'  // Décaler le diagramme vers le bas
+}
+]
+},
+
+{   title: { text: 'Population, Ménages, et Étrangers par Cercle', subtext: 'Cet histogramme illustre la répartition de la population totale, des ménages ,\n' + 'et des étrangers dans les différents cercles de la province d\'Al Haouz. \n'+'Il permet de visualiser et comparer les données démographiques et sociologiques pour chaque cercle', left: 'center', textStyle: { color: 'black' }, subtextStyle: { color: 'black' },  subtextAlign: 'center', subtextStyle: { color: '#000', fontSize: 16, lineHeight: 18, rich: { bold: { fontWeight: 'bold' } } } },
+tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+legend: { data: ['Population', 'Ménages', 'Étrangers'], bottom: 0, textStyle: { color: 'black' } },
+xAxis: { type: 'category', data: communes, axisLabel: { rotate: 30, color: 'black' }, axisLine: { lineStyle: { color: 'black' } } },
+yAxis: { type: 'value', name: 'Nombre', nameTextStyle: { color: 'black' }, axisLabel: { color: 'black' }, axisLine: { lineStyle: { color: 'black' } } },
+series: [{ name: 'Population', type: 'bar', data: populations }, { name: 'Ménages', type: 'bar', data: menages }, { name: 'Étrangers', type: 'bar', data: etrangers }],
+grid: {
+top: '40%',  // Ajustez cette valeur pour déplacer le graphique plus bas ou plus haut
+
+}
+},
+{  title: {
+                text: 'Nombre de bâtiments par commune',
+                subtext: 'Distribution du nombre de bâtiments par commune dans la province d\'Al Haouz, avant le séisme.',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                type: 'category',
+                data: data.map(function (d) { return d.commune; }),
+                axisLabel: {
+                    rotate: -45,
+                    interval: 0
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: 'Nombre de bâtiments',
+                min: 0,
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            },
+            series: [{
+                data: data.map(function (d) { return d.value; }),
+                type: 'bar',
+                itemStyle: {
+                    color: '#4A90E2'
+                }
+            }]
+          },
+              
+];
+          chart.setOption(options[index]);
+      }
+     
+
+
+      // Fonction pour filtrer les titres des graphiques
+      function filterCharts() {
+          var searchQuery = document.getElementById('search-bar').value.toLowerCase();
+          var chartTitles = document.querySelectorAll('.chart-title');
+          var suggestions = document.getElementById('suggestions');
+          
+          // Filtrer les titres des graphiques
+          chartTitles.forEach(function (title, index) {
+              var chartTitle = title.textContent.toLowerCase();
+              title.style.display = chartTitle.includes(searchQuery) ? 'block' : 'none';
+          });
+
+          // Afficher ou masquer les suggestions
+          if (searchQuery.trim() === '') {
+              suggestions.style.display = 'block';
+          } else {
+              suggestions.style.display = 'none';
+          }
+
+          // Afficher les titres des graphiques lorsque la recherche est effectuée
+          document.getElementById('chart-titles').style.display = searchQuery.trim() ? 'block' : 'none';
+      }
+
+      // Fonction pour afficher une suggestion de recherche
+      function displaySuggestion(suggestion) {
+          document.getElementById('search-bar').value = suggestion;
+          filterCharts();
+
+          // Cacher la suggestion cliquée
+          document.getElementById('suggestions').style.display = 'none';
+      }
+  </script>
+  
+
+</div>
+  </section>
+<div class="footer">
+  Made by @girlies with love 🎀
+</div>
+
+  <!-- end about section -->
+
+  
+
+  <!-- end info section -->
+
+  <!-- jQery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script type="text/javascript" src="js/custom.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>

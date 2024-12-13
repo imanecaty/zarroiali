@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="favicon.png" type="">
+
+  <title> AL Houz </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link href="font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="responsive.css" rel="stylesheet" />
+  <style>
+    .image-slider-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .image-slider {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+        }
+
+        .image-slider img {
+            width: 100%;
+            height: auto;
+            display: none; /* Cache les images par défaut */
+        }
+
+        .image-slider img.active {
+            display: block; /* Affiche l'image active */
+        }
+
+        /* Style pour les instructions et le lien de téléchargement */
+        .instructions {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center; /* Centrer le texte */
+        }
+
+        .download-link {
+            font-size: 18px;
+            margin-top: 10px;
+            display: block;
+            color: #007bff;
+            text-align: center; /* Centrer le lien */
+        }
+
+        /* Centrer les boutons sous la fenêtre d'images */
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .slider-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .slider-subtitle {
+            font-size: 16px;
+            font-style: italic;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        .path-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .file-input {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .file-input input {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Ajout des liens pour le téléchargement et le 3D Viewer */
+        .additional-links {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .additional-links a {
+            display: block;
+            font-size: 18px;
+            color: #28a745;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+
+        .additional-links a:hover {
+            color: #218838;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+        .custom-container {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 12220px;
+    background: linear-gradient(to right, #e3f2fd, #f4f4f4);
+    border: 1px solid #ddd; /* Bordure grise légère */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet 3D */
+    overflow: hidden; /* Évite le débordement du contenu */
+}
+
+/* Ajustement pour les écrans plus petits */
+@media (max-width: 768px) {
+    .custom-container {
+        padding: 20px;
+        margin: 10px;
+    }
+}
+h1 {
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+        p {
+            margin: 0 0 20px 0;
+            color: #555;
+            text-align: center;
+            font-size: 16px;
+        }
+        .comparison-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            height: 500px;
+            overflow: hidden;
+            border: 4px solid #1e88e5;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+        }
+        .comparison-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .comparison-container .after {
+            clip-path: inset(0 50% 0 0);
+            transition: clip-path 0.1s ease-out;
+        }
+        .comparison-container .slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: #d32f2f;
+            cursor: ew-resize;
+            z-index: 2;
+            transition: left 0.1s ease-out;
+        }
+        .info-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #1e88e5;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        .info-button:hover {
+            background: #1565c0;
+        }
+        .info-text {
+            margin-top: 10px;
+            padding: 15px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: #333;
+            font-size: 14px;
+            max-width: 800px;
+            display: none;
+        }
+        .info-link {
+            color: #1565c0;
+            text-decoration: none;
+        }
+        .info-link:hover {
+            text-decoration: underline;
+        }
+        .comparison-section {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    background: linear-gradient(to right, #e3f2fd, #f4f4f4);
+    margin: 20px 0;
+    padding: 20px;
+  }
+  </style>
+
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <div class="bg_img_box">
+        <img src="hero-bg.png" alt="">
+      </div>
+    </div>
+
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              Évaluation des bâtiments dans la province d'Al Haouz
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ">
+              <li class="nav-item ">
+                <a class="nav-link" href="index.html">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html"> About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="service.html">Services</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="why.html">3D model <span class="sr-only">(current)</span> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="team.html">Team</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <!-- why section -->
+
+  <section class="why_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          visualisation <span>Satellitaire</span>
+        </h2>
+      </div>
+      </div>
+      <div class= "comparison-section">
+        <h1>Un exemple représentatif d'une zone de la province d'Al Haouz.</h1>
+        <div class="slider-subtitle">Utilisez l'effet rideau pour comparer les changements survenus dans une zone de la province d'Al Haouz avant et après le séisme. Cet outil interactif vous permet d'observer de manière précise les transformations des bâtiments pour une meilleure compréhension de l'impact.</div>
+    <div class="comparison-container">
+        <img src="avantsat.png" alt="Avant séisme" class="before">
+        <img src="apréssat.png" alt="Après séisme" class="after">
+        <div class="slider"></div>
+    </div>
+    <button class="info-button" onclick="toggleInfo()">ℹ️ Plus d'informations</button>
+    <div class="info-text" id="infoText">
+      Ces deux images satellites sont prises successivement : le 21 avril 2010 et le 10 septembre 2023.
+      Elles permettent de comparer l'état avant et après le séisme d'Al Haouz.
+      <br><br>
+      Celle à droite, c'est <span style="font-weight: bold; color: rgb(0, 255, 51);background-color: #085611;">Avant</span> le séisme et celle à gauche, <span style="font-weight: bold; color: rgb(206, 45, 45); background-color: #56140e;">Après</span> le séisme.
+      <br><br>
+        Si vous souhaitez télécharger ces images, accédez à ce lien : 
+        <a href="https://drive.google.com/drive/folders/194xbzSgxcPgGVTkwFsIVXOKDmWnztjeY?usp=sharing" target="_blank" class="info-link">
+            Téléchargez les images ici
+        </a>.
+    </div>
+
+    <script>
+        const container = document.querySelector('.comparison-container');
+        const slider = document.querySelector('.slider');
+        const afterImage = document.querySelector('.after');
+        const infoText = document.getElementById('infoText');
+
+        function toggleInfo() {
+            infoText.style.display = infoText.style.display === 'block' ? 'none' : 'block';
+        }
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+
+            if (x < 0) x = 0;
+            if (x > rect.width) x = rect.width;
+
+            slider.style.left = x + 'px';
+            afterImage.style.clipPath = `inset(0 ${rect.width - x}px 0 0)`;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            slider.style.left = '50%';
+            afterImage.style.clipPath = 'inset(0 50% 0 0)';
+        });
+    </script>
+    </div>
+
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          visualisation <span>3D</span>
+        </h2>
+      </div>
+      </div>
+      <div class="custom-container">
+        <h1>Exemple d'état d'un bâtiment de la zone après le séisme</h1>
+        <div class="slider-subtitle">Voici un extrait de la modélisation 3D d'un bâtiment dans la province Al Haouz, réalisée à partir d'une mission drone survolant cette zone pour évaluer les effets du séisme sur les bâtiments.</div>
+    
+        <!-- Fenêtre pour afficher les images du bâtiment sous différents angles -->
+        <div class="image-slider-container">
+            <div class="image-slider" id="image-slider">
+                <!-- Ajouter ici vos images sous différents angles -->
+                <img src="11.png" class="slider-image active" alt="Angle 1">
+                <img src="22.png" class="slider-image" alt="Angle 2">
+                <img src="33.png" class="slider-image" alt="Angle 3">
+                <img src="44.png" class="slider-image" alt="Angle 4">
+                <img src="55.png" class="slider-image" alt="Angle 5">
+                <img src="77.png" class="slider-image" alt="Angle 6">
+                <img src="66.png" class="slider-image" alt="Angle 7">
+            </div>
+    
+            <!-- Boutons pour naviguer entre les images -->
+            <div class="buttons">
+                <button onclick="prevImage()">Précédent</button>
+                <button onclick="nextImage()">Suivant</button>
+            </div>
+        </div>
+    
+        <!-- Instructions pour télécharger le fichier 3D -->
+        <div class="instructions">
+            <p>Pour une bonne expérience et une évaluation plus fluide, vous pouvez charger ce fichier 3D du bâtiment :</p>
+            <p>Ensuite, vous pouvez visualiser ce modèle 3D dans ce site : <a href="https://3dviewer.net/#" target="_blank">https://3dviewer.net/#</a>, en choisissant le type de fichier "OBJ".</p>
+        </div>
+    
+        <!-- Section pour les liens supplémentaires -->
+        <div class="additional-links">
+            <a href="https://drive.google.com/file/d/1aSteG6o8JUT6NJxXK3Nad6haj9WkxNzl/view" target="_blank">Télécharger le fichier 3D depuis Google Drive</a>
+        </div>
+    
+       
+    
+        <script>
+            // Variables pour gérer le changement d'images
+            let currentIndex = 0;
+            const images = document.querySelectorAll('.slider-image');
+            const totalImages = images.length;
+    
+            // Afficher l'image actuelle
+            function showImage(index) {
+                // Masquer toutes les images
+                images.forEach(image => image.classList.remove('active'));
+                // Afficher l'image actuelle
+                images[index].classList.add('active');
+            }
+    
+            // Passer à l'image suivante
+            function nextImage() {
+                currentIndex = (currentIndex + 1) % totalImages;
+                showImage(currentIndex);
+            }
+    
+            // Passer à l'image précédente
+            function prevImage() {
+                currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+                showImage(currentIndex);
+            }
+    
+            // Initialiser la première image affichée
+            showImage(currentIndex);
+        </script>
+    </div>
+    </section>
+    <div class="footer">
+      Made by @girlies with love ✨
+  </div>
+    
+
+  <!-- jQery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script type="text/javascript" src="js/custom.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>
